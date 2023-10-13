@@ -1,6 +1,6 @@
 #################################################################
 # Dockerfile for Zimbra Ubuntu
-# Based on Ubuntu 18.04
+# Based on Ubuntu 20.04
 # Created by AnhIT
 #################################################################
 FROM ubuntu:20.04
