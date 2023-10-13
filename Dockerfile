@@ -3,9 +3,11 @@
 # Based on Ubuntu 20.04
 # Created by AnhIT
 #################################################################
-FROM ubuntu:20.04
+FROM ubuntu:20.04 as cache-image
 MAINTAINER AnhIT <anhdh.workspace@gmailcom>
 
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Asia/Ho_Chi_Minh
 ## Set Local Repos
 RUN cp /etc/apt/sources.list /tmp/
 RUN echo "deb http://singapore.mirrors.linode.com/ubuntu/ focal main restricted universe multiverse" > /etc/apt/sources.list
@@ -15,8 +17,11 @@ RUN echo "deb http://singapore.mirrors.linode.com/ubuntu/ focal-security main re
 # Enable install resolvconf
 RUN echo 'resolvconf resolvconf/linkify-resolvconf boolean false' | debconf-set-selections
 
+# Update package lists
+RUN apt-get update
+
 # Install dependencies
-RUN apt-get install -y bind9 bind9utils ssh netcat-openbsd sudo libidn11 libpcre3 libgmp10 libexpat1 libstdc++6 libperl5.26 libaio1 resolvconf unzip pax sysstat sqlite3 dnsutils iputils-ping w3m gnupg less lsb-release rsyslog net-tools vim tzdata wget iproute2 locales curl
+RUN apt-get install -y bind9 bind9utils openssh-client netcat-openbsd sudo libidn11 libpcre3 libgmp10 libexpat1 libstdc++6 libperl5.30 libaio1 resolvconf unzip pax sysstat sqlite3 dnsutils iputils-ping w3m gnupg2 less lsb-release rsyslog net-tools vim tzdata wget iproute2 locales curl
 
 # Configure Timezone
 RUN ln -sf /usr/share/zoneinfo/Asia/Ho_Chi_Minh /etc/localtime
@@ -37,6 +42,23 @@ RUN chmod +x /etc/init.d/rsyslog
 
 # Crontab for rsyslog
 RUN (crontab -l 2>/dev/null; echo "1 * * * * /etc/init.d/rsyslog restart > /dev/null 2>&1") | crontab -
+
+
+
+RUN mkdir /home/zimbra
+# Copy tệp cài đặt vào thư mục /tmp trong container
+COPY zcs-8.8.15_GA_4179.UBUNTU20_64.20211118033954.tgz /tmp/
+
+# Giải nén tệp cài đặt và sao chép vào thư mục /home/root
+RUN tar -xzf /tmp/zcs-8.8.15_GA_4179.UBUNTU20_64.20211118033954.tgz -C /tmp/ && \
+    cp -r /tmp/zcs-8.8.15_GA_4179.UBUNTU20_64.20211118033954/*  /home/zimbra
+
+# Xóa tệp cài đặt và thư mục tạm sau khi đã sao chép
+RUN rm /tmp/zcs-8.8.15_GA_4179.UBUNTU20_64.20211118033954.tgz && \
+    rm -rf /tmp/zcs-8.8.15_GA_4179.UBUNTU20_64.20211118033954
+
+# Build frontend
+FROM cache-image as builder
 
 # Startup service
 RUN echo 'cat /etc/resolv.conf > /tmp/resolv.ori' > /services.sh
