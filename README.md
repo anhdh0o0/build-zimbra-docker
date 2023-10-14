@@ -11,7 +11,7 @@ git clone https://github.com/anhdh0o0/build-zimbra-docker.git
 Sau khi clone docker file về thì build nó ra thành image
 
 ```
-Docker build -t anhit:zcsub2004 .
+docker build -t anhit:zcsub2004 .
 ```
 
 Run image này lên
