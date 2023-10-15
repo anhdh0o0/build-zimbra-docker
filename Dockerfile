@@ -11,15 +11,16 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN mkdir /home/zimbra
 # Copy tệp cài đặt vào thư mục /tmp trong container
-COPY zcs-8.8.15_GA_4179.UBUNTU20_64.20211118033954.tgz /tmp/
+COPY zcs-8.8.15_GA_3869.UBUNTU18_64.20190917004220.tgz /tmp/
 
 # Giải nén tệp cài đặt và sao chép vào thư mục /home/root
-RUN tar -xzf /tmp/zcs-8.8.15_GA_4179.UBUNTU20_64.20211118033954.tgz -C /tmp/ && \
-    cp -r /tmp/zcs-8.8.15_GA_4179.UBUNTU20_64.20211118033954/*  /home/zimbra
+
+RUN tar -xzvf /tmp/zcs-8.8.15_GA_3869.UBUNTU18_64.20190917004220.tgz -C /tmp/ && \
+    cp -r /tmp/zcs-8.8.15_GA_3869.UBUNTU18_64.20190917004220/*  /home/zimbra
 
 # Xóa tệp cài đặt và thư mục tạm sau khi đã sao chép
-RUN rm /tmp/zcs-8.8.15_GA_4179.UBUNTU20_64.20211118033954.tgz && \
-    rm -rf /tmp/zcs-8.8.15_GA_4179.UBUNTU20_64.20211118033954
+RUN rm /tmp/zcs-8.8.15_GA_3869.UBUNTU18_64.20190917004220.tgz && \
+    rm -rf /tmp/zcs-8.8.15_GA_3869.UBUNTU18_64.20190917004220
 
 # Build frontend
 FROM cache-image as builder
@@ -61,6 +62,7 @@ RUN chmod +x /srv/dns-auto.sh
 RUN mv /etc/init.d/rsyslog /tmp/
 RUN curl -k https://raw.githubusercontent.com/imanudin11/zimbra-docker/master/rsyslog > /etc/init.d/rsyslog
 RUN chmod +x /etc/init.d/rsyslog
+RUN sed -i '/imklog/s/^/#/' /etc/rsyslog.conf
 
 # Crontab for rsyslog
 RUN (crontab -l 2>/dev/null; echo "1 * * * * /etc/init.d/rsyslog restart > /dev/null 2>&1") | crontab -
