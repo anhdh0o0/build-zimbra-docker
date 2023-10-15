@@ -1,0 +1,2 @@
+ERROR rsyslog
+RUN sed -i '/imklog/s/^/#/' /etc/rsyslog.conf
