@@ -31,13 +31,13 @@ Từ trong thưc mục build-zimbra-docker, build image
 
 
 ```
-docker build -t anhit:zcsub2004 .
+docker build -t anhit:zcsub1804 .
 ```
 
 Run image này lên
 
 ```
-docker run -dit --name zcs -h mail.nexlesoft.io.vn -p 25:25 -p 80:80 -p 443:443 -p 465:465 -p 587:587 -p 993:993 -p 995:995 -p 7071:7071 -v /data/zimbra:/opt/zimbra anhit:zcsub2004
+docker run -dit --name zcs -h mail.nexlesoft.io.vn -p 25:25 -p 80:80 -p 443:443 -p 465:465 -p 587:587 -p 993:993 -p 995:995 -p 7071:7071 -v /data/zimbra:/opt/zimbra anhit:zcsub1804
 ```
 or use docker-compose
 ```
