@@ -3,7 +3,7 @@ services:
   zcs:
     image: anhit:zcsub2004
     container_name: zcs
-    hostname: mail.domain.com
+    hostname: mail.nexle.local
     ports:
       - '25:25'
       - '80:80'
