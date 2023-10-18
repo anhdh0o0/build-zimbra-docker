@@ -3,12 +3,12 @@
 Link download zimbra:
 
 - [https://files.zimbra.com/downloads/10.0.0_GA/zcs-NETWORK-10.0.0_GA_4518.UBUNTU20_64.20230301065514.tgz](https://)
-
 - Yêu câu tối thiểu
 
-    CPU – 1.5 Ghz
-    Memory – 8 GB
-    Storage – 5 GB for ZCS installation
+  CPU – 1.5 Ghz
+  Memory – 8 GB
+  Storage – 5 GB for ZCS installation
+
 ### Step 1: Chuẩn bị resouce trên vps cài đặt
 
 Clone resouce này về local
@@ -92,7 +92,9 @@ docker exec -it zcs bash
   docker exec -it zcs sh -c "dig MX nexle.local"
   docker exec -it zcs sh -c "dig A mail.nexle.local"
   ```
+
   hoặc có thể sử dụng lệnh:
+
   ```
   docker exec -it zcs sh -c "nslookup -type=A mail.nexle.local"
   docker exec -it zcs sh -c "nslookup -type=MX nexle.local"
@@ -127,16 +129,15 @@ su - zimbra
 ```
 
 - Xem tình trạng zimbra
+
   ```
   zmcontrol status
   ```
-
 - Restart Zimbra
 
   ```
   zmcontrol restart
   ```
-
 - Check version setup
 
   ```
@@ -146,6 +147,7 @@ su - zimbra
 ![](./img/zmcontrol-v.png)
 
 ## Việc setup Zimbra đến đây là kết thúc, tuy nhiên để có 1 zimbra server tốt hơn bạn có thể tìm hiểu config DKIM và certbot
+
 - Tham khảo config DKIM
 
   Link: https://wiki.zimbra.com/wiki/Configuring_for_DKIM_Signing
@@ -155,14 +157,11 @@ su - zimbra
   ```
   su zimbra
   ```
-
   Add DKIM data to a domain with no existing DKIM configuration
 
   ```
   /opt/zimbra/libexec/zmdkimkeyutil -a -d example.com
   ```
-
 - Một số link tải zimbra khác:
-
 - Link zimbra sử dụng: https://files.zimbra.com/downloads/8.8.15_GA/zcs-8.8.15_GA_4179.UBUNTU20_64.20211118033954.tgz
 - Link zimbra latest version: https://files.zimbra.com/downloads/10.0.0_GA/zcs-NETWORK-10.0.0_GA_4518.UBUNTU20_64.20230301065514.tgz
