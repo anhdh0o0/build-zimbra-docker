@@ -19,8 +19,10 @@ RUN echo 'resolvconf resolvconf/linkify-resolvconf boolean false' | debconf-set-
 # Update package lists
 RUN apt-get update -y && \
     apt-get upgrade -y && apt-get install sudo -y
-RUN apt-get install -y bind9 bind9utils openssh-client netcat-openbsd sudo libidn11 libpcre3 libgmp10 libexpat1 libstdc++6 libperl5.30 libaio1 resolvconf unzip pax sysstat sqlite3 dnsutils iputils-ping w3m gnupg2 less lsb-release rsyslog net-tools vim tzdata wget iproute2 locales curl
+RUN apt-get install -y bind9 bind9utils openssh-client netcat-openbsd sudo libidn11 libpcre3 libgmp10 libexpat1 libstdc++6 libperl5.30 libaio1 resolvconf unzip pax sysstat sqlite3 dnsutils iputils-ping w3m gnupg2 less lsb-release   net-tools vim tzdata wget iproute2 locales curl
+
 RUN apt-get -y install nano
+
 ENV TZ=Asia/Ho_Chi_Minh
 
 # Configure Timezone
@@ -47,18 +49,17 @@ RUN (crontab -l 2>/dev/null; echo "1 * * * * /etc/init.d/rsyslog restart > /dev/
 FROM cache-image as builder
 
 # Bộ cài zimbra
-RUN mkdir /home/zimbra
-# Copy tệp cài đặt vào thư mục /tmp trong container
-COPY zcs-NETWORK-10.0.0_GA_4518.UBUNTU20_64.20230301065514.tgz /tmp/
+RUN cd /tmp/ && \ 
+    wget https://files.zimbra.com/downloads/8.8.15_GA/zcs-8.8.15_GA_4179.UBUNTU20_64.20211118033954.tgz
 
-# Giải nén tệp cài đặt và sao chép vào thư mục /home/root
-RUN tar -xzf /tmp/zcs-NETWORK-10.0.0_GA_4518.UBUNTU20_64.20230301065514.tgz -C /tmp/ && \
-    cp -r /tmp/zcs-NETWORK-10.0.0_GA_4518.UBUNTU20_64.20230301065514/*  /home/zimbra
+RUN mkdir /home/Zimbra
+
+RUN tar -xzf /tmp/zcs-8.8.15_GA_4179.UBUNTU20_64.20211118033954.tgz -C /tmp/ && \
+    cp -r /tmp/zcs-8.8.15_GA_4179.UBUNTU20_64.20211118033954/*  /home/zimbra
 
 # Xóa tệp cài đặt và thư mục tạm sau khi đã sao chép
-RUN rm /tmp/zcs-NETWORK-10.0.0_GA_4518.UBUNTU20_64.20230301065514.tgz && \
-    rm -rf /tmp/zcs-NETWORK-10.0.0_GA_4518.UBUNTU20_64.20230301065514
-
+RUN rm /tmp/zcs-8.8.15_GA_4179.UBUNTU20_64.20211118033954.tgz && \
+    rm -rf /tmp/zcs-8.8.15_GA_4179.UBUNTU20_64.20211118033954
 # Startup service
 RUN echo 'cat /etc/resolv.conf > /tmp/resolv.ori' > /services.sh
 RUN echo 'echo "nameserver 127.0.0.1" > /tmp/resolv.add' >> /services.sh

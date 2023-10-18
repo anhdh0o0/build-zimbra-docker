@@ -3,7 +3,7 @@ services:
   zcs:
     image: anhit:zcsub2004
     container_name: zcs
-    hostname: localhost
+    hostname: mail.domain.com
     ports:
       - '25:25'
       - '80:80'
