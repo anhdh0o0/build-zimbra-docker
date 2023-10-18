@@ -117,8 +117,6 @@ docker exec -it zcs sh -c "cd /home/zimbra/ && ./install.sh --platform-override"
 
 ## Một số lệnh làm việc với zimbra
 
-L
-
 Link bài viết tham khảo thêm: https://www.ssldragon.com/how-to/install-ssl-certificate/zimbra/
 
 Để thao tác với zimbra cần chuyển sang user zimbra
