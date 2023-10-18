@@ -100,7 +100,7 @@ docker exec -it zcs bash
 * Trường hợp đã setup or cài lại thì nên clean cache để đảm bảo quá trình cài đặt config mới được nhận.
   `systemd-resolve --flush-caches`
 
-### Step 3: Intall Zimbras
+### Step 3: Intall Zimbra
 
 Run lệnh dưới để cài đặt
 
