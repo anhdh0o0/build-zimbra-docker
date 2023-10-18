@@ -19,9 +19,7 @@ RUN echo 'resolvconf resolvconf/linkify-resolvconf boolean false' | debconf-set-
 # Update package lists
 RUN apt-get update -y && \
     apt-get upgrade -y && apt-get install sudo -y
-RUN apt-get install -y bind9 bind9utils openssh-client netcat-openbsd sudo libidn11 libpcre3 libgmp10 libexpat1 libstdc++6 libperl5.30 libaio1 resolvconf unzip pax sysstat sqlite3 dnsutils iputils-ping w3m gnupg2 less lsb-release   net-tools vim tzdata wget iproute2 locales curl
-
-RUN apt-get -y install nano
+RUN apt-get install -y bind9 bind9utils openssh-client netcat-openbsd sudo libidn11 libpcre3 libgmp10 libexpat1 libstdc++6 libperl5.30 libaio1 resolvconf unzip pax sysstat sqlite3 dnsutils iputils-ping w3m gnupg2 less lsb-release rsyslog net-tools vim tzdata wget iproute2 locales curl nano
 
 ENV TZ=Asia/Ho_Chi_Minh
 
@@ -52,7 +50,7 @@ FROM cache-image as builder
 RUN cd /tmp/ && \ 
     wget https://files.zimbra.com/downloads/8.8.15_GA/zcs-8.8.15_GA_4179.UBUNTU20_64.20211118033954.tgz
 
-RUN mkdir /home/Zimbra
+RUN mkdir /home/zimbra
 
 RUN tar -xzf /tmp/zcs-8.8.15_GA_4179.UBUNTU20_64.20211118033954.tgz -C /tmp/ && \
     cp -r /tmp/zcs-8.8.15_GA_4179.UBUNTU20_64.20211118033954/*  /home/zimbra
