@@ -1,4 +1,4 @@
-# Build Redmine 8.8 on Ubuntu 20.04
+# Build Zimbra 8.8 on Ubuntu 20.04
 
 Link download zimbra:
 
